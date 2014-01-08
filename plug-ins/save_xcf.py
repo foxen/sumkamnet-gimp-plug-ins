@@ -10,8 +10,8 @@
 # Парсит имя файла и, если требуется, меняет формат строки имени
 # Сохраняет открытый jpeg файл с обтравленным фоном
 # в формате xcf в директорию xcfPath.
-# Перемещает исходный jpeg файл из директории uJpgPath 
-# в директорию srcJpgPath.
+# Перемещает исходный jpeg файл из директории uJpegPath 
+# в директорию srcJpegPath.
 
 
 from gimpfu import *
@@ -20,15 +20,17 @@ import shutil
 import ConfigParser
 
 def plugin_func():
-  cfgHomeFile = "~/sumkamnet/gimp-plug-ins.cfg"
+  cfgHomeFile = ~/sumkamnet/gimp-plug-ins-config/gimp-plug-ins.cfg
 
   config = ConfigParser.ConfigParser()
   config.read(os.path.expanduser(cfgHomeFile))
 
-  uJpgPath = config.get("Paths","uJpgPath")
-  uXcfPath = config.get("Paths","uXcfPath")
-  srcJpgPath = config.get("Paths","srcJpgPath")
-  xcfExtension = config.get("Extension","xcfExtension")
+  basePath = config.get("Paths","base")
+
+  uJpegPath = basePath + config.get("Paths","uJpeg")
+  uXcfPath = basePath + config.get("Paths","uXcf")
+  srcJpegPath = basePath + config.get("Paths","srcJpeg")
+  xcfExtension = basePath + config.get("Extensions","xcf")
 
   image = gimp.image_list()[0]
 
@@ -42,7 +44,7 @@ def plugin_func():
   
   pdb.gimp_file_save(image, image.layers[0], uXcfPath + name + xcfExtension, name + xcfExtension)
 
-  shutil.move( uJpgPath + pdb.gimp_image_get_name(image), srcJpgPath)
+  shutil.move( uJpegPath + pdb.gimp_image_get_name(image), srcJpegPath)
 
   return
 

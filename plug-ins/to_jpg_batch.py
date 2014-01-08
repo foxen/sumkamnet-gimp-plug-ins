@@ -21,7 +21,7 @@ import datetime
 import shutil
 
 err = open(os.path.expanduser("~/sumkamnet/gimp-plug-ins-logs/gimp-plug-ins.error.log"), "a+")
-log = open(os.path.expanduser("~/sumkamnet/gimp-plug-ins.log"), "a+")
+log = open(os.path.expanduser("~/sumkamnet/gimp-plug-ins-logs/gimp-plug-ins.log"), "a+")
 sys.stderr = err
 #sys.stdout = log
 
@@ -31,19 +31,21 @@ def plugin_func(cfgHomeFile):
   config = ConfigParser.ConfigParser()
   config.read(os.path.expanduser(cfgHomeFile))
 
-  logPath = config.get("Paths","logPath")
+  logPath = config.get("Paths","log")
   now = datetime.datetime.now()
   logFile = open(logPath+now.strftime("%Y-%m-%d")+".to_jpg.log","a+")
 
-  uXcfPath = config.get("Paths","uXcfPath")
-  xcfPath = config.get("Paths","xcfPath")
-  xcfExtension = config.get("Extension","xcfExtension")
+  basePath = config.get("Paths","base")
+
+  uXcfPath = basePath + config.get("Paths","uXcf")
+  xcfPath = basePath + config.get("Paths","xcf")
+  xcfExtension = basePath + config.get("Extensions","xcf")
   
-  jpgPath = config.get("Paths","jpgPath")
-  jpgLpath = config.get("Paths","jpgLpath")
-  jpgMpath = config.get("Paths","jpgMpath")
-  jpgSpath = config.get("Paths","jpgSpath")
-  jpgXsPath = config.get("Paths","jpgXsPath")
+  jpegPath = config.get("Paths","jpeg")
+  jpegLpath = config.get("Paths","jpegL")
+  jpegMpath = config.get("Paths","jpegM")
+  jpegSpath = config.get("Paths","jpegS")
+  jpegXsPath = config.get("Paths","jpegXs")
 
   heightL = config.getint("Heights","l")
   heightM = config.getint("Heights","m")
@@ -82,7 +84,7 @@ def plugin_func(cfgHomeFile):
         layerD = imageD.layers[0]
 
         pdb.plug_in_sharpen(imageD, layerD, jpegSharpen)
-        pdb.file_jpeg_save(imageD,layerD,jpgPath+nameJpg,nameJpg,jpegCompress,jpegSmoothing,1,1,"",0,0,0,1)
+        pdb.file_jpeg_save(imageD,layerD,jpegPath+nameJpg,nameJpg,jpegCompress,jpegSmoothing,1,1,"",0,0,0,1)
 
         pdb.gimp_image_delete(imageD)
         imageD = pdb.gimp_image_duplicate(image)
@@ -90,7 +92,7 @@ def plugin_func(cfgHomeFile):
 
         pdb.gimp_image_scale_full(imageD, heightL*0.75, heightL,1)
         pdb.plug_in_sharpen(imageD, layerD, jpegSharpen) 
-        pdb.file_jpeg_save(imageD,layerD,jpgLpath+nameJpg,nameJpg,jpegCompress,jpegSmoothing,1,1,"",0,0,0,0)
+        pdb.file_jpeg_save(imageD,layerD,jpegLpath+nameJpg,nameJpg,jpegCompress,jpegSmoothing,1,1,"",0,0,0,0)
 
         pdb.gimp_image_delete(imageD)
         imageD = pdb.gimp_image_duplicate(image)
@@ -98,7 +100,7 @@ def plugin_func(cfgHomeFile):
 
         pdb.gimp_image_scale_full(imageD, heightM*0.75, heightM,1)
         pdb.plug_in_sharpen(imageD, layerD, jpegSharpen)
-        pdb.file_jpeg_save(imageD,layerD,jpgMpath+nameJpg,nameJpg,jpegCompress,jpegSmoothing,1,1,"",0,0,0,0)
+        pdb.file_jpeg_save(imageD,layerD,jpegMpath+nameJpg,nameJpg,jpegCompress,jpegSmoothing,1,1,"",0,0,0,0)
 
         pdb.gimp_image_delete(imageD)
         imageD = pdb.gimp_image_duplicate(image)
@@ -106,7 +108,7 @@ def plugin_func(cfgHomeFile):
 
         pdb.gimp_image_scale_full(imageD, heightS*0.75, heightS,1)
         pdb.plug_in_sharpen(imageD, layerD, jpegSharpen)
-        pdb.file_jpeg_save(imageD,layerD,jpgSpath+nameJpg,nameJpg,jpegCompress,jpegSmoothing,1,1,"",0,0,0,0)
+        pdb.file_jpeg_save(imageD,layerD,jpegSpath+nameJpg,nameJpg,jpegCompress,jpegSmoothing,1,1,"",0,0,0,0)
 
         pdb.gimp_image_delete(imageD)
         imageD = pdb.gimp_image_duplicate(image)
@@ -114,7 +116,7 @@ def plugin_func(cfgHomeFile):
 
         pdb.gimp_image_scale_full(imageD, heightXs*0.75, heightXs,1)
         pdb.plug_in_sharpen(imageD, layerD, jpegSharpen)
-        pdb.file_jpeg_save(imageD,layerD,jpgXsPath+nameJpg, nameJpg,jpegCompress,jpegSmoothing,1,1,"",0,0,0,0)
+        pdb.file_jpeg_save(imageD,layerD,jpegXsPath+nameJpg, nameJpg,jpegCompress,jpegSmoothing,1,1,"",0,0,0,0)
 
         pdb.gimp_image_delete(imageD)
         
@@ -131,20 +133,20 @@ def plugin_func(cfgHomeFile):
     except:
       a = 1
 
-  os.system(" exiftool -all= " + jpgPath + "/*.jpg")
-  os.system("rm " + jpgPath + "/*.jpg_original")
+  os.system(" exiftool -all= " + jpegPath + "/*.jpg")
+  os.system("rm " + jpegPath + "/*.jpg_original")
 
-  os.system(" exiftool -all= " + jpgLpath + "/*.jpg")
-  os.system("rm " + jpgLpath + "/*.jpg_original")
+  os.system(" exiftool -all= " + jpegLpath + "/*.jpg")
+  os.system("rm " + jpegLpath + "/*.jpg_original")
 
-  os.system(" exiftool -all= " + jpgMpath + "/*.jpg")
-  os.system("rm " + jpgMpath + "/*.jpg_original")
+  os.system(" exiftool -all= " + jpegMpath + "/*.jpg")
+  os.system("rm " + jpegMpath + "/*.jpg_original")
 
-  os.system(" exiftool -all= " + jpgSpath + "/*.jpg")
-  os.system("rm " + jpgSpath + "/*.jpg_original")
+  os.system(" exiftool -all= " + jpegSpath + "/*.jpg")
+  os.system("rm " + jpegSpath + "/*.jpg_original")
 
-  os.system(" exiftool -all= " + jpgXsPath + "/*.jpg")
-  os.system("rm " + jpgXsPath + "/*.jpg_original")
+  os.system(" exiftool -all= " + jpegXsPath + "/*.jpg")
+  os.system("rm " + jpegXsPath + "/*.jpg_original")
 
   return
 

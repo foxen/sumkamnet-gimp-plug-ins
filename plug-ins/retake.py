@@ -7,7 +7,7 @@
 # для каталога товаров.
 #
 # Считывает файл конфигурации cfgHomeFile.
-# Перемещает исходный файл из директории uJpgPath в
+# Перемещает исходный файл из директории uJpegPath в
 # в директорию retakePath/YY-mm-dd/.
 # добавляет строку с именем снимка в файл
 # retakePath/YY-mm-dd/retake.txt.
@@ -19,21 +19,23 @@ import datetime
 import shutil
 #import sys
 
-#err = open(os.path.expanduser("~/sumkamnet/gimp-plug-ins.error.log"), "a")
-#log = open(os.path.expanduser("~/sumkamnet/gimp-plug-ins.log"), "a")
+#err = open(os.path.expanduser("~/sumkamnet/gimp-plug-ins-logs/gimp-plug-ins.error.log"), "a")
+#log = open(os.path.expanduser("~/sumkamnet/gimp-plug-ins-logs/gimp-plug-ins.log"), "a")
 #sys.stderr = err
 #sys.stdout = log
 
 def plugin_func():
  
-  cfgHomeFile = "~/sumkamnet/gimp-plug-ins.cfg"
+  cfgHomeFile = ~/sumkamnet/gimp-plug-ins-config/gimp-plug-ins.cfg
 
   config = ConfigParser.ConfigParser()
   config.read(os.path.expanduser(cfgHomeFile))
 
-  jpegExtension = config.get("Extension","jpegExtension")
-  uJpgPath = config.get("Paths","uJpgPath")
-  retakePath = config.get("Paths","retakePath")
+  basePath = config.get("Paths","base")
+
+  jpegExtension = basePath + config.get("Extensions","jpeg")
+  uJpegPath = basePath + config.get("Paths","uJpeg")
+  retakePath = basePath + config.get("Paths","retake")
 
   now = datetime.datetime.now()
   dateNow = now.strftime("%Y-%m-%d")
@@ -45,7 +47,7 @@ def plugin_func():
 
   name = pdb.gimp_image_get_name(image)[0:-4]
   
-  shutil.move( uJpgPath + name + jpegExtension, retakePath + dateNow + "/")
+  shutil.move( uJpegPath + name + jpegExtension, retakePath + dateNow + "/")
   f = open(retakePath + dateNow + "/" + "retake.txt","a+")
   f.write(name + "\n")
   f.close()

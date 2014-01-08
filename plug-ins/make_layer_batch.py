@@ -29,13 +29,15 @@ def plugin_func(cfgHomeFile):
   config = ConfigParser.ConfigParser()
   config.read(os.path.expanduser(cfgHomeFile))
 
-  logPath = config.get("Paths","logPath")
+  logPath = config.get("Paths","log")
   now = datetime.datetime.now()
   logFile = open(logPath+now.strftime("%Y-%m-%d")+".make-layer.log","a+")
 
-  uXcfPath = config.get("Paths","uXcfPath")
-  xcfPath = config.get("Paths","xcfPath")
-  xcfExtension = config.get("Extension","xcfExtension")
+  basePath = config.get("Paths","base")
+
+  uXcfPath = basePath + config.get("Paths","uXcf")
+  xcfPath = basePath + config.get("Paths","xcf")
+  xcfExtension = config.get("Extensions","xcf")
 
   for root, dirs, files in os.walk(uXcfPath):
     for name in files:

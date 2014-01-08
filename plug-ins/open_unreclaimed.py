@@ -7,7 +7,7 @@
 # для каталога товаров
 #
 # Считывает файл конфигурации cfgHomeFile.
-# Открывает первый jpeg файл в директории uJpgPath.
+# Открывает первый jpeg файл в директории uJpegPath.
 # Разворачивает изображение.
 # Выводит изображение в окно GIMP для последующей обтравки контура.
 
@@ -17,13 +17,13 @@ import os
 import ConfigParser
 #import sys
 
-#err = open(os.path.expanduser("~/sumkamnet/gimp-plug-ins.error.log"), "a")
-#log = open(os.path.expanduser("~/sumkamnet/gimp-plug-ins.log"), "a")
+#err = open(os.path.expanduser("~/sumkamnet/gimp-plug-ins-logs/gimp-plug-ins.error.log"), "a")
+#log = open(os.path.expanduser("~/sumkamnet/gimp-plug-ins-logs/gimp-plug-ins.log"), "a")
 #sys.stderr = err
 #sys.stdout = log
 
 def plugin_func():
-  cfgHomeFile = "~/sumkamnet/gimp-plug-ins.cfg"
+  cfgHomeFile = ~/sumkamnet/gimp-plug-ins-config/gimp-plug-ins.cfg
 
   #pluginLog = open(os.path.expanduser("~/sumkamnet/gimp-plug-ins.plugin.log"), "a")
   #pluginLog.write("pen-plugin\n")
@@ -31,13 +31,15 @@ def plugin_func():
   config = ConfigParser.ConfigParser()
   config.read(os.path.expanduser(cfgHomeFile))
 
-  uJpgPath = config.get("Paths","uJpgPath")
-  jpegExtension = config.get("Extension","jpegExtension")
+  basePath = config.get("Paths","base")
+
+  uJpegPath = basePath + config.get("Paths","uJpeg")
+  jpegExtension = config.get("Extensions","jpeg")
   
   fileName = ""
   fileList = []
 
-  for root, dirs, files in os.walk(uJpgPath):
+  for root, dirs, files in os.walk(uJpegPath):
     for name in files:
       if name.endswith(jpegExtension):
         fileList.append(name)
@@ -47,7 +49,7 @@ def plugin_func():
   else:
     return None
   
-  image = pdb.file_jpeg_load(uJpgPath+fileName, fileName)
+  image = pdb.file_jpeg_load(uJpegPath+fileName, fileName)
   pdb.gimp_image_rotate(image, 2)
   display = pdb.gimp_display_new(image)
   
