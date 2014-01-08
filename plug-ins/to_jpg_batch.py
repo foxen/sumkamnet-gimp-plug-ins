@@ -23,7 +23,7 @@ import shutil
 err = open(os.path.expanduser("~/sumkamnet/gimp-plug-ins-logs/gimp-plug-ins.error.log"), "a+")
 log = open(os.path.expanduser("~/sumkamnet/gimp-plug-ins-logs/gimp-plug-ins.log"), "a+")
 sys.stderr = err
-#sys.stdout = log
+sys.stdout = log
 
 def plugin_func(cfgHomeFile):
 

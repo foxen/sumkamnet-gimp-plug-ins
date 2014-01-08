@@ -23,7 +23,7 @@ import ConfigParser
 #sys.stdout = log
 
 def plugin_func():
-  cfgHomeFile = ~/sumkamnet/gimp-plug-ins-config/gimp-plug-ins.cfg
+  cfgHomeFile = "~/sumkamnet/gimp-plug-ins-config/gimp-plug-ins.cfg"
 
   #pluginLog = open(os.path.expanduser("~/sumkamnet/gimp-plug-ins.plugin.log"), "a")
   #pluginLog.write("pen-plugin\n")

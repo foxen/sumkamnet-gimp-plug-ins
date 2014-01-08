@@ -26,7 +26,7 @@ import shutil
 
 def plugin_func():
  
-  cfgHomeFile = ~/sumkamnet/gimp-plug-ins-config/gimp-plug-ins.cfg
+  cfgHomeFile = "~/sumkamnet/gimp-plug-ins-config/gimp-plug-ins.cfg"
 
   config = ConfigParser.ConfigParser()
   config.read(os.path.expanduser(cfgHomeFile))

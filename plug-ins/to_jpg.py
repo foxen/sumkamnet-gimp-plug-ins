@@ -24,7 +24,8 @@ log = open(os.path.expanduser("~/sumkamnet/gimp-plug-ins-logs/gimp-plug-ins.log"
 sys.stderr = err
 sys.stdout = log
 
-def plugin_func(cfgHomeFile = ~/sumkamnet/gimp-plug-ins-config/gimp-plug-ins.cfg):
+def plugin_func():
+  cfgHomeFile = "~/sumkamnet/gimp-plug-ins-config/gimp-plug-ins.cfg"
   config = ConfigParser.ConfigParser()
   config.read(os.path.expanduser(cfgHomeFile))
 
