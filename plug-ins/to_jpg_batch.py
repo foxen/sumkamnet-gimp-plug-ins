@@ -20,7 +20,7 @@ import sys
 import datetime
 import shutil
 
-err = open(os.path.expanduser("~/sumkamnet/gimp-plug-ins.error.log"), "a+")
+err = open(os.path.expanduser("~/sumkamnet/gimp-plug-ins-logs/gimp-plug-ins.error.log"), "a+")
 log = open(os.path.expanduser("~/sumkamnet/gimp-plug-ins.log"), "a+")
 sys.stderr = err
 #sys.stdout = log
@@ -158,7 +158,7 @@ register(
           "to jpg batch", # Название пункта меню, с помощью которого дополнение будет запускаться
           "", # Типы изображений, с которыми может работать дополнение
           [
-          (PF_STRING,"cfgHomeFile", "path to config", "~/sumkamnet/gimp-plug-ins.cfg")
+          (PF_STRING,"cfgHomeFile", "path to config", ~/sumkamnet/gimp-plug-ins-config/gimp-plug-ins.cfg)
           ],# Параметры, которые будут переданы дополнению
           [],# Список переменных, которые вернет дополнение
           plugin_func, 

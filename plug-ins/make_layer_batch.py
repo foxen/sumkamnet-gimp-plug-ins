@@ -18,13 +18,13 @@ import ConfigParser
 import datetime
 import sys
 
-err = open(os.path.expanduser("~/sumkamnet/gimp-plug-ins.error.log"), "a+")
-log = open(os.path.expanduser("~/sumkamnet/gimp-plug-ins.log"), "a+")
+err = open(os.path.expanduser("~/sumkamnet/gimp-plug-ins-logs/gimp-plug-ins.error.log"), "a+")
+log = open(os.path.expanduser("~/sumkamnet/gimp-plug-ins-logs/gimp-plug-ins.log"), "a+")
 sys.stderr = err
 sys.stdout = log
 
 def plugin_func(cfgHomeFile):
-  cfgHomeFile = "~/sumkamnet/gimp-plug-ins.cfg"
+  cfgHomeFile = "~/sumkamnet/gimp-plug-ins-config/gimp-plug-ins.cfg"
 
   config = ConfigParser.ConfigParser()
   config.read(os.path.expanduser(cfgHomeFile))
@@ -79,7 +79,7 @@ register(
           "make layer batch", # Название пункта меню, с помощью которого дополнение будет запускаться
           "", # Типы изображений, с которыми может работать дополнение
           [
-          (PF_STRING,"cfgHomeFile", "path to config", "~/sumkamnet/gimp-plug-ins.cfg")
+          (PF_STRING,"cfgHomeFile", "path to config", ~/sumkamnet/gimp-plug-ins-config/gimp-plug-ins.cfg)
           ],# Параметры, которые будут переданы дополнению
           [],# Список переменных, которые вернет дополнение
           plugin_func, 
