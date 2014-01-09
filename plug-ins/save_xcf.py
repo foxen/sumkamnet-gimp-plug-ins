@@ -30,7 +30,7 @@ def plugin_func():
   uJpegPath = basePath + config.get("Paths","uJpeg")
   uXcfPath = basePath + config.get("Paths","uXcf")
   srcJpegPath = basePath + config.get("Paths","srcJpeg")
-  xcfExtension = basePath + config.get("Extensions","xcf")
+  xcfExtension = config.get("Extensions","xcf")
 
   image = gimp.image_list()[0]
 

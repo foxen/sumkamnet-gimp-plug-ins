@@ -31,21 +31,21 @@ def plugin_func(cfgHomeFile):
   config = ConfigParser.ConfigParser()
   config.read(os.path.expanduser(cfgHomeFile))
 
-  logPath = config.get("Paths","log")
+  logsPath = config.get("Paths","logs")
   now = datetime.datetime.now()
-  logFile = open(logPath+now.strftime("%Y-%m-%d")+".to_jpg.log","a+")
+  logFile = open(logsPath+now.strftime("%Y-%m-%d")+".to_jpg.log","a+")
 
   basePath = config.get("Paths","base")
 
   uXcfPath = basePath + config.get("Paths","uXcf")
   xcfPath = basePath + config.get("Paths","xcf")
-  xcfExtension = basePath + config.get("Extensions","xcf")
+  xcfExtension = config.get("Extensions","xcf")
   
-  jpegPath = config.get("Paths","jpeg")
-  jpegLpath = config.get("Paths","jpegL")
-  jpegMpath = config.get("Paths","jpegM")
-  jpegSpath = config.get("Paths","jpegS")
-  jpegXsPath = config.get("Paths","jpegXs")
+  jpegPath = basePath + config.get("Paths","jpeg")
+  jpegLpath = basePath + config.get("Paths","jpegL")
+  jpegMpath = basePath + config.get("Paths","jpegM")
+  jpegSpath = basePath + config.get("Paths","jpegS")
+  jpegXsPath = basePath + config.get("Paths","jpegXs")
 
   heightL = config.getint("Heights","l")
   heightM = config.getint("Heights","m")
@@ -160,7 +160,7 @@ register(
           "to jpg batch", # Название пункта меню, с помощью которого дополнение будет запускаться
           "", # Типы изображений, с которыми может работать дополнение
           [
-          (PF_STRING,"cfgHomeFile", "path to config", ~/sumkamnet/gimp-plug-ins-config/gimp-plug-ins.cfg)
+          (PF_STRING,"cfgHomeFile", "path to config", "~/sumkamnet/gimp-plug-ins-config/gimp-plug-ins.cfg")
           ],# Параметры, которые будут переданы дополнению
           [],# Список переменных, которые вернет дополнение
           plugin_func, 

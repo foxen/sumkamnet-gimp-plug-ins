@@ -29,9 +29,9 @@ def plugin_func(cfgHomeFile):
   config = ConfigParser.ConfigParser()
   config.read(os.path.expanduser(cfgHomeFile))
 
-  logPath = config.get("Paths","log")
+  logsPath = config.get("Paths","logs")
   now = datetime.datetime.now()
-  logFile = open(logPath+now.strftime("%Y-%m-%d")+".make-layer.log","a+")
+  logFile = open(logsPath+now.strftime("%Y-%m-%d")+".make-layer.log","a+")
 
   basePath = config.get("Paths","base")
 
@@ -81,7 +81,7 @@ register(
           "make layer batch", # Название пункта меню, с помощью которого дополнение будет запускаться
           "", # Типы изображений, с которыми может работать дополнение
           [
-          (PF_STRING,"cfgHomeFile", "path to config", ~/sumkamnet/gimp-plug-ins-config/gimp-plug-ins.cfg)
+          (PF_STRING,"cfgHomeFile", "path to config", "~/sumkamnet/gimp-plug-ins-config/gimp-plug-ins.cfg")
           ],# Параметры, которые будут переданы дополнению
           [],# Список переменных, которые вернет дополнение
           plugin_func, 
